@@ -1,0 +1,172 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Compression</title>
+</head>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Image Compression</title>
+</head>
+
+<body>
+    <input type="file" id="imageInput" accept="image/*" aria-label="Select Image File">
+    <canvas id="canvas"></canvas>
+    <p>Original Image Resolution: <span id="originalResolution"></span></p>
+    <p>Original Image Size: <span id="originalSize"></span></p>
+    <p>Compressed Image Resolution: <span id="compressedResolution"></span></p>
+    <p>Base64 Size: <span id="base64Size"></span> <span id="base64JpgSize"></span></p>
+    <p>
+        <label for="base64Value">Base64 Value:</label>
+        <br>
+        <textarea id="base64Value" rows="2" cols="60" placeholder="Compressed image data will appear here"></textarea>
+    </p>
+    <button id="downloadBtn">Download Image</button>
+    <button id="saveToLocalStorageBtn">Save to LocalStorage</button>
+    <button id="loadFromLocalStorageBtn" onclick="loadFromLocalStorage">Load from LocalStorage</button>
+
+    <script>
+        // 页面文本内容修改函数
+        function updateTextContent(elementId, content) {
+            document.getElementById(elementId).textContent = content;
+        }
+
+        // 原始图片信息获取函数
+        function getOriginalImageInfo(file) {
+            updateTextContent('originalSize', formatSize(file.size));
+            return new Promise((resolve) => {
+                let reader = new FileReader();
+                reader.onload = function (e) {
+                    let img = new Image();
+                    img.onload = function () {
+                        updateTextContent('originalResolution', `${img.width}x${img.height}`);
+                        resolve({ width: img.width, height: img.height });
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // 新分辨率计算函数
+        function calculateNewDimensions(originalWidth, originalHeight) {
+            let maxWidth = 1000;
+            let maxHeight = 1000;
+            let width = originalWidth;
+            let height = originalHeight;
+
+            if (width > height && width > maxWidth) {
+                height *= maxWidth / width;
+                width = maxWidth;
+            } else if (height > width && height > maxHeight) {
+                width *= maxHeight / height;
+                height = maxHeight;
+            } else {
+                if (width > maxWidth) {
+                    height *= maxWidth / width;
+                    width = maxWidth;
+                }
+            }
+
+            return { width, height };
+        }
+
+        // 图片绘制到Canvas函数
+        function drawImageToCanvas(img, width, height) {
+            let canvas = document.getElementById('canvas');
+            let ctx = canvas.getContext('2d');
+            // canvas.style.display = 'none';
+            canvas.width = width;
+            canvas.height = height;
+            ctx.drawImage(img, 0, 0, width, height);
+            updateTextContent('compressedResolution', `${width}x${height}`);
+            return canvas;
+        }
+
+        // 压缩图片数据计算函数
+        function getCompressedImageData(canvas) {
+            let base64 = canvas.toDataURL('image/jpeg', 0.7);
+            updateTextContent('base64Size', formatSize(base64.length));
+            updateTextContent('base64JpgSize', formatSize(base64.length * 0.69));
+            document.getElementById('base64Value').value = base64;
+            return base64;
+        }
+
+        // 压缩图片下载函数
+        function downloadCompressedImage(base64) {
+            let link = document.createElement('a');
+            let timestamp = new Date().getTime();
+            link.download = 'cpsd-img-' + timestamp + '.jpg';
+            link.href = base64;
+            link.click();
+        }
+
+        // 压缩图片存储到localStorage函数
+        function saveToLocalStorage(base64) {
+            localStorage.setItem('whaleCompressedImage', base64);
+            alert('Image saved to localStorage!');
+        }
+
+        // 格式化文件大小
+        function formatSize(bytes) {
+            if (bytes < 1024) {
+                return `${bytes} bytes`;
+            } else if (bytes < 1048576) {
+                return `${(bytes / 1024).toFixed(2)} KB`;
+            } else {
+                return `${(bytes / 1048576).toFixed(2)} MB`;
+            }
+        }
+
+        // 压缩图片从localStorage读取函数
+        function loadFromLocalStorage() {
+            let savedBase64 = localStorage.getItem('whaleCompressedImage');
+            if (savedBase64) {
+                let img = new Image();
+                img.onload = function () {
+                    let canvas = drawImageToCanvas(img, img.width, img.height);
+                    document.getElementById('base64Value').value = savedBase64;
+                    updateTextContent('base64Size', formatSize(savedBase64.length));
+                };
+                img.src = savedBase64;
+            } else {
+                console.log('No image found in localStorage.');
+            }
+        }
+
+        // 文件选择事件处理
+        document.getElementById('imageInput').addEventListener('change', async function (event) {
+            let file = event.target.files[0];
+            if (!file) return;
+
+            let originalImageInfo = await getOriginalImageInfo(file);
+            let { width, height } = calculateNewDimensions(originalImageInfo.width, originalImageInfo.height);
+
+            let img = new Image();
+            img.onload = function () {
+                let canvas = drawImageToCanvas(img, width, height);
+                let base64 = getCompressedImageData(canvas);
+
+                // 设置下载按钮
+                document.getElementById('downloadBtn').onclick = function () {
+                    downloadCompressedImage(base64);
+                };
+
+                // 设置保存到 localStorage 按钮
+                document.getElementById('saveToLocalStorageBtn').onclick = function () {
+                    saveToLocalStorage(base64);
+                };
+            };
+            img.src = URL.createObjectURL(file);
+        });
+
+        // 当页面加载完成
+        window.onload = function () {
+            // 设置从 localStorage 读取按钮
+            document.getElementById('loadFromLocalStorageBtn').onclick = loadFromLocalStorage;
+        }
+    </script>
+</body>
+
+</html>

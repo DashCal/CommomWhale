@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Selector and List</title>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .time-info {
+            margin-bottom: 20px;
+        }
+
+        .time-info p {
+            font-size: 18px;
+            margin: 5px 0;
+        }
+
+        .time-selector {
+            margin-bottom: 20px;
+        }
+
+        .time-selector input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .item-list {
+            margin-bottom: 20px;
+        }
+
+        .item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .item img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .item-content {
+            flex: 1;
+        }
+
+        .item-content p {
+            margin: 5px 0;
+        }
+
+        .item-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .item-buttons button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+
+        .item-buttons button:last-child {
+            background-color: #dc3545;
+        }
+
+        .confirm-button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background-color: #28a745;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="time-info">
+            <p id="time-difference"></p>
+        </div>
+        <div class="time-selector">
+            <label for="datetime">选择日期和时间：</label>
+            <input type="datetime-local" id="datetime" min="" required>
+        </div>
+        <div class="item-list">
+            <div class="item">
+                <img src="https://via.placeholder.com/50" alt="Item 1">
+                <div class="item-content">
+                    <p>注释文字1</p>
+                    <p id="timestamp1">时间戳1</p>
+                </div>
+                <div class="item-buttons">
+                    <button>选择</button>
+                    <button>删除</button>
+                </div>
+            </div>
+            <div class="item">
+                <img src="https://via.placeholder.com/50" alt="Item 2">
+                <div class="item-content">
+                    <p>注释文字2</p>
+                    <p id="timestamp2">时间戳2</p>
+                </div>
+                <div class="item-buttons">
+                    <button>选择</button>
+                    <button>删除</button>
+                </div>
+            </div>
+            <div class="item">
+                <img src="https://via.placeholder.com/50" alt="Item 3">
+                <div class="item-content">
+                    <p>注释文字3</p>
+                    <p id="timestamp3">时间戳3</p>
+                </div>
+                <div class="item-buttons">
+                    <button>选择</button>
+                    <button>删除</button>
+                </div>
+            </div>
+        </div>
+        <button class="confirm-button">确认</button>
+    </div>
+
+    <script>
+        // 设置时间选择器的最小值为当前时间
+        const now = new Date();
+        const datetimeInput = document.getElementById('datetime');
+        datetimeInput.min = now.toISOString().slice(0, 16);
+
+        // 更新时间差信息
+        function updateTimeDifference() {
+            const selectedTime = new Date(datetimeInput.value + ":00Z");
+            const currentTime = new Date();
+            const timeDifference = selectedTime - currentTime;
+
+            if (timeDifference < 0) {
+                document.getElementById('time-difference').textContent = "选择的时间已过期";
+            } else {
+                const hours = Math.floor(timeDifference / (1000 * 60 * 60));
+                const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+                document.getElementById('time-difference').textContent = `距离选择的时间还有 ${hours} 小时 ${minutes} 分钟`;
+            }
+        }
+
+        // 监听时间选择器的变化
+        datetimeInput.addEventListener('change', updateTimeDifference);
+
+        // 初始化时间差信息
+        updateTimeDifference();
+    </script>
+</body>
+
+</html>

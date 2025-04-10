@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Whale 定力 | 定力一下，其实很简单 | beta v0.01 | LocalWu LiteApp</title>
+    <link rel="stylesheet" href="../style/home.css" />
+</head>
+
+<body>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="header">
+            <div class="title">whale &nbsp;<sub><sup><code>Beta V0.01</code></sup></sub></div>
+            <sup>定力一下，其实很简单</sup>
+        </div>
+
+        <div class="menu">
+            <div class="nav-group">
+                <div class="item" data-section="newSection">
+                    <div class="icon">➕</div>
+                    <div class="text">新增</div>
+                </div>
+                <div class="item" data-section="controlSection">
+                    <div class="icon">🎛️</div>
+                    <div class="text">控制</div>
+                    <div class="tag">空</div>
+                </div>
+                <div class="item" data-section="statsSection">
+                    <div class="icon">📊</div>
+                    <div class="text">统计</div>
+                    <div class="tag">空</div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="icon">👤</div>
+                <div class="text">个人资料</div>
+            </div>
+            <div class="item" id="messageButton">
+                <div class="icon">💬</div>
+                <div class="text">消息中心</div>
+                <div class="tag">3</div>
+            </div>
+            <div class="item">
+                <div class="icon">⚙️</div>
+                <div class="text">设置</div>
+            </div>
+            <div class="item">
+                <div class="icon">ℹ️</div>
+                <div class="text">关于我们</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="btn-group">
+                <div class="btn">
+                    <div class="icon">🌐</div>
+                    <div class="text">调整语言</div>
+                </div>
+                <div class="btn">
+                    <div class="icon">🌙</div>
+                    <div class="text">夜间模式</div>
+                </div>
+                <div class="btn">
+                    <div class="icon">❤️</div>
+                    <div class="text">前往赞赏</div>
+                </div>
+            </div>
+            <div class="copyright">
+                <br>
+                © 2025 <b>LocalWu</b>/<b>LiteApp</b>/<b>whale</b>.<br>
+                All rights reserved.<br>
+                Passion Drives. 热爱使燃。
+            </div>
+        </div>
+    </aside>
+
+    <!-- 顶部导航栏 -->
+    <header class="top-bar">
+        <div class="left">
+            <div class="btn" id="sidebarButton">
+                <span>☰</span>
+            </div>
+        </div>
+        <div class="title" id="appTitle">正在进行的 whale</div>
+        <div class="right">
+            <div class="btn" id="settingsButton">
+                <span>⚙️</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- 内容区域 -->
+    <main class="content">
+        <!-- 控制页面 -->
+        <section class="section active" id="controlSection">
+            <div class="card">
+                <div class="card-title">控制面板</div>
+                <div class="card-content">
+                    这里是控制面板的内容，可以添加各种控制选项和开关。
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-title">设备状态</div>
+                <div class="card-content">
+                    当前设备运行良好，所有功能正常。
+                </div>
+            </div>
+        </section>
+
+        <!-- 新建页面 -->
+        <section class="section" id="newSection">
+            <div class="card">
+                <div class="card-title">新建内容</div>
+                <div class="card-content">
+                    点击下方按钮创建新内容。
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-title">最近创建</div>
+                <div class="card-content">
+                    <div>文档1 - 2023-10-15</div>
+                    <div>文档2 - 2023-10-14</div>
+                    <div>文档3 - 2023-10-13</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 统计页面 -->
+        <section class="section" id="statsSection">
+            <div class="card">
+                <div class="card-title">使用统计</div>
+                <div class="card-content">
+                    <div>总使用时长: 2小时30分钟</div>
+                    <div>今日使用: 45分钟</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-title">功能使用情况</div>
+                <div class="card-content">
+                    <div>控制功能: 15次</div>
+                    <div>新建功能: 20次</div>
+                    <div>统计功能: 5次</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 底部标签栏 -->
+    <footer class="nav-bar">
+        <div class="nav-bar-item item active" data-section="controlSection">
+            <div class="icon">🎛️</div>
+            <div>控制</div>
+        </div>
+        <div class="nav-bar-item item" data-section="newSection">
+            <div class="icon">➕</div>
+            <div>新建</div>
+        </div>
+        <div class="nav-bar-item item" data-section="statsSection">
+            <div class="icon">📊</div>
+            <div>统计</div>
+        </div>
+    </footer>
+
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+
+    <!-- 设置弹窗 -->
+    <div class="settings-modal" id="settingsModal">
+        <div class="settings-header">
+            <div class="settings-title">设置</div>
+            <div class="settings-close" id="settingsClose">
+                <span>×</span>
+            </div>
+        </div>
+        <div class="settings-section">
+            <div class="settings-section-title">常规</div>
+            <div class="settings-item" data-sub-settings="general">
+                <div class="settings-item-label">通知设置</div>
+                <div class="settings-item-arrow">›</div>
+            </div>
+            <div class="settings-item">
+                <div class="settings-item-label">隐私</div>
+                <div class="settings-item-arrow">›</div>
+            </div>
+        </div>
+        <div class="settings-section">
+            <div class="settings-section-title">显示与亮度</div>
+            <div class="settings-item">
+                <div class="settings-item-label">深色模式</div>
+                <div class="settings-item-arrow">›</div>
+            </div>
+            <div class="settings-item">
+                <div class="settings-item-label">文字大小</div>
+                <div class="settings-item-arrow">›</div>
+            </div>
+        </div>
+        <div class="settings-section">
+            <div class="settings-section-title">应用设置</div>
+            <div class="settings-item">
+                <div class="settings-item-label">自动更新</div>
+                <div class="settings-item-switch">◯</div>
+            </div>
+            <div class="settings-item">
+                <div class="settings-item-label">数据同步</div>
+                <div class="settings-item-switch">◉</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 二级设置页面 -->
+    <div class="sub-settings" id="generalSettings">
+        <header class="top-bar" style="position: relative; top: 0;">
+            <div class="btn" id="backButton">
+                <span>←</span>
+            </div>
+            <div class="title">通知设置</div>
+        </header>
+
+        <div style="margin-top: 44px; padding: 16px;">
+            <div class="settings-item">
+                <div class="settings-item-label">允许通知</div>
+                <div class="settings-item-switch">◉</div>
+            </div>
+            <div class="settings-item">
+                <div class="settings-item-label">通知类型</div>
+                <div class="settings-item-arrow">›</div>
+            </div>
+            <div class="settings-item">
+                <div class="settings-item-label">通知声音</div>
+                <div class="settings-item-arrow">›</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 消息弹窗 -->
+    <div class="message-modal" id="messageModal">
+        <div class="message-header">
+            <div class="message-title">设置</div>
+            <div class="message-close" id="messageClose">
+                <span>×</span>
+            </div>
+        </div>
+        <div class="message-section">
+            <div class="message-section-title">常规</div>
+            <div class="message-item" data-sub-message="general">
+                <div class="message-item-label">通知设置</div>
+                <div class="message-item-arrow">›</div>
+            </div>
+            <div class="message-item">
+                <div class="message-item-label">隐私</div>
+                <div class="message-item-arrow">›</div>
+            </div>
+        </div>
+        <div class="message-section">
+            <div class="message-section-title">显示与亮度</div>
+            <div class="message-item">
+                <div class="message-item-label">深色模式</div>
+                <div class="message-item-arrow">›</div>
+            </div>
+            <div class="message-item">
+                <div class="message-item-label">文字大小</div>
+                <div class="message-item-arrow">›</div>
+            </div>
+        </div>
+        <div class="message-section">
+            <div class="message-section-title">应用设置</div>
+            <div class="message-item">
+                <div class="message-item-label">自动更新</div>
+                <div class="message-item-switch">◯</div>
+            </div>
+            <div class="message-item">
+                <div class="message-item-label">数据同步</div>
+                <div class="message-item-switch">◉</div>
+            </div>
+        </div>
+    </div>
+
+    <script lang="javascript" src="../script/home.js"></script>
+</body>
+
+</html>
